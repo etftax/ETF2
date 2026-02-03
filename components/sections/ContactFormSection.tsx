@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,13 +23,37 @@ export default function ContactFormSection() {
     setIsSubmitting(true);
     setError("");
 
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.phone) {
+      setError("Vă rugăm completați toate câmpurile obligatorii.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Adresa de email nu este validă.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      const response = await fetch("/api/contact", {
+      // Submit to Netlify Forms
+      const formDataEncoded = new URLSearchParams();
+      formDataEncoded.append("form-name", "contact");
+      formDataEncoded.append("name", formData.name);
+      formDataEncoded.append("email", formData.email);
+      formDataEncoded.append("phone", formData.phone);
+      formDataEncoded.append("company", formData.company || "");
+      formDataEncoded.append("message", formData.message || "");
+
+      const response = await fetch("/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(formData),
+        body: formDataEncoded.toString(),
       });
 
       if (!response.ok) {
@@ -39,7 +63,25 @@ export default function ContactFormSection() {
       setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
     } catch (err) {
-      setError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
+      // Fallback to API route if Netlify Forms fails
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Eroare la trimiterea mesajului");
+        }
+
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      } catch (fallbackErr) {
+        setError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -47,6 +89,15 @@ export default function ContactFormSection() {
 
   return (
     <section className="py-24 bg-secondary" id="formular">
+      {/* Hidden Netlify form for detection */}
+      <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <input type="text" name="company" />
+        <textarea name="message" />
+      </form>
+
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -183,10 +234,10 @@ export default function ContactFormSection() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-medium text-foreground mb-3">
-                  Mulțumim pentru mesaj!
+                  Mesajul a fost trimis cu succes!
                 </h3>
                 <p className="text-muted-foreground mb-2">
-                  Mesajul tău a fost trimis cu succes.
+                  Mulțumim pentru mesaj.
                 </p>
                 <p className="text-muted-foreground mb-6">
                   Un consultant din echipa noastră te va contacta în maximum <strong className="text-foreground">4 ore lucrătoare</strong>.
@@ -200,7 +251,21 @@ export default function ContactFormSection() {
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5"
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <p className="hidden">
+                  <label>
+                    Nu completa acest câmp: <input name="bot-field" />
+                  </label>
+                </p>
+
                 {error && (
                   <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
                     {error}
@@ -216,6 +281,7 @@ export default function ContactFormSection() {
                   </label>
                   <Input
                     id="name"
+                    name="name"
                     type="text"
                     placeholder="Numele dumneavoastră"
                     value={formData.name}
@@ -237,6 +303,7 @@ export default function ContactFormSection() {
                     </label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       placeholder="email@companie.ro"
                       value={formData.email}
@@ -256,6 +323,7 @@ export default function ContactFormSection() {
                     </label>
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
                       placeholder="+40 7XX XXX XXX"
                       value={formData.phone}
@@ -277,6 +345,7 @@ export default function ContactFormSection() {
                   </label>
                   <Input
                     id="company"
+                    name="company"
                     type="text"
                     placeholder="Numele companiei"
                     value={formData.company}
@@ -296,6 +365,7 @@ export default function ContactFormSection() {
                   </label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Descrieți pe scurt nevoile afacerii dumneavoastră..."
                     rows={4}
                     value={formData.message}

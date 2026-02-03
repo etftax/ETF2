@@ -12,6 +12,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     title: "Evolution Tax Finance | Contabilitate și Consultanță Fiscală",
     description: "Servicii profesionale de contabilitate, consultanță fiscală, audit și payroll pentru companii din România.",

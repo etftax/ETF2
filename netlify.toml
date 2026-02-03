@@ -5,8 +5,9 @@
   command = "bun run build"
   publish = ".next"
 
-[build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
-
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Form notifications - email will be sent to etftax@gmail.com
+# Configure in Netlify dashboard: Site settings > Forms > Form notifications
+# Add email notification for form "contact" to etftax@gmail.com

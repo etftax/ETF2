@@ -55,12 +55,21 @@ export default function ContactPage() {
     setSubmitError("");
 
     try {
-      const response = await fetch("/api/contact", {
+      // Submit to Netlify Forms
+      const formDataEncoded = new URLSearchParams();
+      formDataEncoded.append("form-name", "contact-page");
+      formDataEncoded.append("name", formData.name);
+      formDataEncoded.append("email", formData.email);
+      formDataEncoded.append("phone", formData.phone);
+      formDataEncoded.append("company", formData.company || "");
+      formDataEncoded.append("message", formData.message || "");
+
+      const response = await fetch("/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(formData),
+        body: formDataEncoded.toString(),
       });
 
       if (!response.ok) {
@@ -71,7 +80,26 @@ export default function ContactPage() {
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       setErrors({});
     } catch (err) {
-      setSubmitError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
+      // Fallback to API route if Netlify Forms fails
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Eroare la trimiterea mesajului");
+        }
+
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+        setErrors({});
+      } catch (fallbackErr) {
+        setSubmitError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -79,6 +107,15 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Hidden Netlify form for detection */}
+      <form name="contact-page" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <input type="text" name="company" />
+        <textarea name="message" />
+      </form>
+
       {/* Header with dark background for this page */}
       <div className="bg-primary">
         <Header />
@@ -203,10 +240,10 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <h3 className="text-2xl font-medium text-foreground mb-3">
-                      Mulțumim pentru mesaj!
+                      Mesajul a fost trimis cu succes!
                     </h3>
                     <p className="text-muted-foreground mb-2">
-                      Mesajul tău a fost trimis cu succes.
+                      Mulțumim pentru mesaj.
                     </p>
                     <p className="text-muted-foreground mb-6">
                       Un consultant din echipa noastră vă va contacta în maximum <strong className="text-foreground">4 ore lucrătoare</strong>.
@@ -234,13 +271,28 @@ export default function ContactPage() {
                       </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form
+                      onSubmit={handleSubmit}
+                      className="space-y-5"
+                      name="contact-page"
+                      method="POST"
+                      data-netlify="true"
+                      netlify-honeypot="bot-field"
+                    >
+                      <input type="hidden" name="form-name" value="contact-page" />
+                      <p className="hidden">
+                        <label>
+                          Nu completa acest câmp: <input name="bot-field" />
+                        </label>
+                      </p>
+
                       <div>
                         <label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">
                           Nume <span className="text-destructive">*</span>
                         </label>
                         <Input
                           id="name"
+                          name="name"
                           type="text"
                           placeholder="Numele dumneavoastră"
                           value={formData.name}
@@ -259,6 +311,7 @@ export default function ContactPage() {
                         </label>
                         <Input
                           id="email"
+                          name="email"
                           type="email"
                           placeholder="email@companie.ro"
                           value={formData.email}
@@ -277,6 +330,7 @@ export default function ContactPage() {
                         </label>
                         <Input
                           id="phone"
+                          name="phone"
                           type="tel"
                           placeholder="+40 7XX XXX XXX"
                           value={formData.phone}
@@ -295,6 +349,7 @@ export default function ContactPage() {
                         </label>
                         <Input
                           id="company"
+                          name="company"
                           type="text"
                           placeholder="Numele companiei"
                           value={formData.company}
@@ -309,6 +364,7 @@ export default function ContactPage() {
                         </label>
                         <Textarea
                           id="message"
+                          name="message"
                           placeholder="Descrieți pe scurt nevoile afacerii dumneavoastră..."
                           rows={3}
                           value={formData.message}
