@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import HeaderEN from "@/components/en/HeaderEN";
+import FooterEN from "@/components/en/FooterEN";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function ContactPage() {
+export default function ContactPageEN() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,19 +25,17 @@ export default function ContactPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Numele este obligatoriu";
+      newErrors.name = "Name is required";
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Adresa de email este obligatorie";
+      newErrors.email = "Email address is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Adresa de email nu este validă";
+      newErrors.email = "Please enter a valid email address";
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = "Numărul de telefon este obligatoriu";
-    } else if (!/^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = "Numărul de telefon nu este valid";
+      newErrors.phone = "Phone number is required";
     }
 
     setErrors(newErrors);
@@ -55,9 +53,8 @@ export default function ContactPage() {
     setSubmitError("");
 
     try {
-      // Submit to Netlify Forms
       const formDataEncoded = new URLSearchParams();
-      formDataEncoded.append("form-name", "contact-page");
+      formDataEncoded.append("form-name", "contact-en");
       formDataEncoded.append("name", formData.name);
       formDataEncoded.append("email", formData.email);
       formDataEncoded.append("phone", formData.phone);
@@ -73,14 +70,13 @@ export default function ContactPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Eroare la trimiterea mesajului");
+        throw new Error("Error sending message");
       }
 
       setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       setErrors({});
     } catch (err) {
-      // Fallback to API route if Netlify Forms fails
       try {
         const response = await fetch("/api/contact", {
           method: "POST",
@@ -91,14 +87,14 @@ export default function ContactPage() {
         });
 
         if (!response.ok) {
-          throw new Error("Eroare la trimiterea mesajului");
+          throw new Error("Error sending message");
         }
 
         setIsSubmitted(true);
         setFormData({ name: "", email: "", phone: "", company: "", message: "" });
         setErrors({});
       } catch (fallbackErr) {
-        setSubmitError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
+        setSubmitError("An error occurred. Please try again or contact us directly by phone.");
       }
     } finally {
       setIsSubmitting(false);
@@ -107,8 +103,7 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Hidden Netlify form for detection */}
-      <form name="contact-page" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <form name="contact-en" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
         <input type="tel" name="phone" />
@@ -116,11 +111,9 @@ export default function ContactPage() {
         <textarea name="message" />
       </form>
 
-      {/* Header with dark background for this page */}
       <div className="bg-primary">
-        <Header />
+        <HeaderEN />
 
-        {/* Hero */}
         <section className="pt-32 pb-20">
           <div className="container">
             <div className="max-w-3xl">
@@ -128,24 +121,23 @@ export default function ContactPage() {
                 Contact
               </p>
               <h1 className="text-4xl md:text-5xl font-normal text-primary-foreground leading-tight mb-6">
-                Hai să discutăm despre afacerea ta
+                Let's discuss your business
               </h1>
               <p className="text-lg text-primary-foreground/70 leading-relaxed">
-                Suntem aici să răspundem întrebărilor tale și să îți oferim soluțiile potrivite pentru nevoile companiei tale.
+                We're here to answer your questions and provide the right solutions for your company's needs.
               </p>
             </div>
           </div>
         </section>
       </div>
 
-      {/* Contact Section */}
-      <section className="py-24 bg-secondary" id="formular">
+      <section className="py-24 bg-secondary" id="form">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Contact Info */}
             <div>
               <h2 className="text-2xl font-medium text-foreground mb-8">
-                Informații de contact
+                Contact Information
               </h2>
 
               <div className="space-y-8 mb-12">
@@ -156,15 +148,8 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground mb-2">Telefon</h3>
-                    <a
-                      href="tel:+40744364603"
-                      className="text-muted-foreground hover:text-accent transition-colors text-sm"
-                      data-gtag="click"
-                      data-gtag-category="contact"
-                      data-gtag-action="phone_click"
-                      data-gtag-label="contact_page_phone"
-                    >
+                    <h3 className="font-medium text-foreground mb-2">Phone</h3>
+                    <a href="tel:+40744364603" className="text-muted-foreground hover:text-accent transition-colors text-sm">
                       +40 744 364 603
                     </a>
                   </div>
@@ -178,14 +163,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground mb-2">Email</h3>
-                    <a
-                      href="mailto:etftax@gmail.com"
-                      className="text-muted-foreground hover:text-accent transition-colors text-sm"
-                      data-gtag="click"
-                      data-gtag-category="contact"
-                      data-gtag-action="email_click"
-                      data-gtag-label="contact_page_email"
-                    >
+                    <a href="mailto:etftax@gmail.com" className="text-muted-foreground hover:text-accent transition-colors text-sm">
                       etftax@gmail.com
                     </a>
                   </div>
@@ -199,8 +177,8 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground mb-2">Adresă</h3>
-                    <p className="text-muted-foreground text-sm">Str. Sarafinesti 16, sector 2, București</p>
+                    <h3 className="font-medium text-foreground mb-2">Address</h3>
+                    <p className="text-muted-foreground text-sm">Str. Sarafinesti 16, sector 2, Bucharest</p>
                   </div>
                 </div>
 
@@ -211,20 +189,19 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground mb-2">Program</h3>
-                    <p className="text-muted-foreground text-sm">Luni - Vineri: 09:00 - 18:00</p>
-                    <p className="text-muted-foreground text-sm">Sâmbătă - Duminică: Închis</p>
+                    <h3 className="font-medium text-foreground mb-2">Business Hours</h3>
+                    <p className="text-muted-foreground text-sm">Monday - Friday: 09:00 - 18:00</p>
+                    <p className="text-muted-foreground text-sm">Saturday - Sunday: Closed</p>
                   </div>
                 </div>
               </div>
 
-              {/* Company Details */}
               <div className="bg-card rounded-lg p-6 border border-border">
-                <h3 className="font-medium text-foreground mb-4">Date firmă</h3>
+                <h3 className="font-medium text-foreground mb-4">Company Details</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><strong className="text-foreground">Denumire:</strong> Evolution Tax Finance SRL</p>
-                  <p><strong className="text-foreground">CUI:</strong> 35486370</p>
-                  <p><strong className="text-foreground">Adresă:</strong> Str. Sarafinesti 16, sector 2, București</p>
+                  <p><strong className="text-foreground">Name:</strong> Evolution Tax Finance SRL</p>
+                  <p><strong className="text-foreground">Tax ID:</strong> 35486370</p>
+                  <p><strong className="text-foreground">Address:</strong> Str. Sarafinesti 16, sector 2, Bucharest</p>
                 </div>
               </div>
             </div>
@@ -240,29 +217,25 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <h3 className="text-2xl font-medium text-foreground mb-3">
-                      Mesajul a fost trimis cu succes!
+                      Message sent successfully!
                     </h3>
                     <p className="text-muted-foreground mb-2">
-                      Mulțumim pentru mesaj.
+                      Thank you for your message.
                     </p>
                     <p className="text-muted-foreground mb-6">
-                      Un consultant din echipa noastră vă va contacta în maximum <strong className="text-foreground">4 ore lucrătoare</strong>.
+                      A consultant from our team will contact you within <strong className="text-foreground">4 business hours</strong>.
                     </p>
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsSubmitted(false)}
-                      className="border-border text-foreground hover:bg-secondary"
-                    >
-                      Trimite alt mesaj
+                    <Button variant="outline" onClick={() => setIsSubmitted(false)} className="border-border text-foreground hover:bg-secondary">
+                      Send another message
                     </Button>
                   </div>
                 ) : (
                   <>
                     <h3 className="text-xl font-medium text-foreground mb-2">
-                      Trimite-ne un mesaj
+                      Send us a message
                     </h3>
                     <p className="text-sm text-muted-foreground mb-8">
-                      Câmpurile marcate cu * sunt obligatorii
+                      Fields marked with * are required
                     </p>
 
                     {submitError && (
@@ -271,30 +244,21 @@ export default function ContactPage() {
                       </div>
                     )}
 
-                    <form
-                      onSubmit={handleSubmit}
-                      className="space-y-5"
-                      name="contact-page"
-                      method="POST"
-                      data-netlify="true"
-                      netlify-honeypot="bot-field"
-                    >
-                      <input type="hidden" name="form-name" value="contact-page" />
+                    <form onSubmit={handleSubmit} className="space-y-5" name="contact-en" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                      <input type="hidden" name="form-name" value="contact-en" />
                       <p className="hidden">
-                        <label>
-                          Nu completa acest câmp: <input name="bot-field" />
-                        </label>
+                        <label>Don't fill this field: <input name="bot-field" /></label>
                       </p>
 
                       <div>
                         <label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">
-                          Nume <span className="text-destructive">*</span>
+                          Name <span className="text-destructive">*</span>
                         </label>
                         <Input
                           id="name"
                           name="name"
                           type="text"
-                          placeholder="Numele dumneavoastră"
+                          placeholder="Your name"
                           value={formData.name}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setFormData({ ...formData, name: e.target.value });
@@ -313,7 +277,7 @@ export default function ContactPage() {
                           id="email"
                           name="email"
                           type="email"
-                          placeholder="email@companie.ro"
+                          placeholder="email@company.com"
                           value={formData.email}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setFormData({ ...formData, email: e.target.value });
@@ -326,7 +290,7 @@ export default function ContactPage() {
 
                       <div>
                         <label htmlFor="phone" className="text-sm font-medium text-foreground mb-2 block">
-                          Telefon <span className="text-destructive">*</span>
+                          Phone <span className="text-destructive">*</span>
                         </label>
                         <Input
                           id="phone"
@@ -345,13 +309,13 @@ export default function ContactPage() {
 
                       <div>
                         <label htmlFor="company" className="text-sm font-medium text-foreground mb-2 block">
-                          Companie <span className="text-muted-foreground text-xs font-normal">(opțional)</span>
+                          Company <span className="text-muted-foreground text-xs font-normal">(optional)</span>
                         </label>
                         <Input
                           id="company"
                           name="company"
                           type="text"
-                          placeholder="Numele companiei"
+                          placeholder="Company name"
                           value={formData.company}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, company: e.target.value })}
                           className="h-12 border-border focus:border-accent focus:ring-accent/20"
@@ -360,12 +324,12 @@ export default function ContactPage() {
 
                       <div>
                         <label htmlFor="message" className="text-sm font-medium text-foreground mb-2 block">
-                          Mesaj <span className="text-muted-foreground text-xs font-normal">(opțional)</span>
+                          Message <span className="text-muted-foreground text-xs font-normal">(optional)</span>
                         </label>
                         <Textarea
                           id="message"
                           name="message"
-                          placeholder="Descrieți pe scurt nevoile afacerii dumneavoastră..."
+                          placeholder="Briefly describe your business needs..."
                           rows={3}
                           value={formData.message}
                           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, message: e.target.value })}
@@ -378,10 +342,6 @@ export default function ContactPage() {
                         size="lg"
                         className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-12 text-base font-medium mt-2"
                         disabled={isSubmitting}
-                        data-gtag="click"
-                        data-gtag-category="form"
-                        data-gtag-action="form_submit"
-                        data-gtag-label="contact_page_form_submit"
                       >
                         {isSubmitting ? (
                           <>
@@ -389,22 +349,20 @@ export default function ContactPage() {
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                             </svg>
-                            Se trimite...
+                            Sending...
                           </>
                         ) : (
-                          "Programează o consultație gratuită"
+                          "Schedule a Free Consultation"
                         )}
                       </Button>
 
-                      {/* Trust text */}
                       <p className="text-xs text-center text-muted-foreground pt-1">
-                        Un consultant din echipa noastră vă va contacta în maximum <strong className="text-foreground">4 ore lucrătoare</strong>.
+                        A consultant from our team will contact you within <strong className="text-foreground">4 business hours</strong>.
                       </p>
 
-                      {/* GDPR Consent Note */}
                       <div className="pt-2 border-t border-border">
                         <p className="text-xs text-muted-foreground leading-relaxed">
-                          Prin trimiterea acestui formular, sunteți de acord ca datele dumneavoastră să fie utilizate exclusiv pentru a vă contacta în legătură cu solicitarea dvs. Datele nu vor fi partajate cu terți.
+                          By submitting this form, you agree that your data will be used exclusively to contact you regarding your request. Data will not be shared with third parties.
                         </p>
                       </div>
                     </form>
@@ -416,7 +374,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <Footer />
+      <FooterEN />
     </main>
   );
 }

@@ -1,45 +1,45 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import HeaderEN from "@/components/en/HeaderEN";
+import FooterEN from "@/components/en/FooterEN";
 import { Mail, Phone } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Despre Noi | Evolution Tax Finance - Contabilitate Strategică",
-  description: "O organizație financiar-contabilă construită pentru antreprenori care gândesc pe termen lung. Structură, anticipare, interpretare corectă a legii.",
+  title: "About Us | Evolution Tax Finance - Strategic Accounting",
+  description: "A financial-accounting organization built for entrepreneurs who think long-term. Structure, anticipation, correct interpretation of the law.",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "Despre Evolution Tax Finance",
-    description: "Despre structură. Despre control. Despre decizii asumate.",
+    title: "About Evolution Tax Finance",
+    description: "About structure. About control. About informed decisions.",
     type: "website",
-    locale: "ro_RO",
+    locale: "en_US",
   },
 };
 
-export default function DesprePage() {
+export default function AboutPageEN() {
   return (
     <main className="min-h-screen">
-      <Header />
+      <HeaderEN />
 
       {/* Hero Section */}
       <section className="bg-primary py-24 pt-32 md:py-32 md:pt-40">
         <div className="container">
           <div className="max-w-4xl">
             <p className="text-sm font-medium text-accent uppercase tracking-widest mb-6">
-              Despre noi
+              About Us
             </p>
             <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-white mb-8 leading-tight">
-              Despre structură. Despre control.<br className="hidden md:block" /> Despre decizii asumate.
+              About structure. About control.<br className="hidden md:block" /> About informed decisions.
             </h1>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-6">
-              Într-un cadru fiscal din ce în ce mai complex și impredictibil, contabilitatea nu mai este o funcție administrativă. Este un instrument de guvernanță, un mecanism de control și, în cele din urmă, o formă de protecție juridico-financiară.
+              In an increasingly complex and unpredictable tax environment, accounting is no longer an administrative function. It is a governance tool, a control mechanism, and ultimately, a form of legal-financial protection.
             </p>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed font-medium">
-              Evolution Tax Finance a fost construită tocmai din această convingere.
+              Evolution Tax Finance was built precisely from this conviction.
             </p>
           </div>
         </div>
@@ -49,46 +49,46 @@ export default function DesprePage() {
       <section className="bg-accent py-8 md:py-10">
         <div className="container">
           <p className="text-center text-accent-foreground text-lg md:text-xl font-medium italic">
-            „Într-un mediu fiscal impredictibil, diferența nu o face reacția, ci structura."
+            "In an unpredictable tax environment, the difference is not made by reaction, but by structure."
           </p>
         </div>
       </section>
 
-      {/* Cine suntem */}
+      {/* Who We Are */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-2xl md:text-3xl font-medium text-foreground mb-8">
-              Cine suntem, în esență
+              Who we are, in essence
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Suntem o organizație financiar-contabilă care abordează contabilitatea ca pe un sistem, nu ca pe o succesiune de obligații declarative.
+              We are a financial-accounting organization that approaches accounting as a system, not as a succession of declarative obligations.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              Nu lucrăm cu soluții rapide, improvizații sau artificii conjuncturale.
+              We don't work with quick fixes, improvisations, or circumstantial artifices.
             </p>
-            <p className="text-lg text-foreground font-medium mb-4">Lucrăm cu:</p>
+            <p className="text-lg text-foreground font-medium mb-4">We work with:</p>
             <ul className="space-y-3 mb-8">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">structură,</span>
+                <span className="text-lg text-muted-foreground">structure,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">anticipare,</span>
+                <span className="text-lg text-muted-foreground">anticipation,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">interpretare corectă a legii,</span>
+                <span className="text-lg text-muted-foreground">correct interpretation of the law,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">și decizii asumate înainte ca riscul să apară.</span>
+                <span className="text-lg text-muted-foreground">and informed decisions before risk arises.</span>
               </li>
             </ul>
             <div className="bg-secondary/50 border-l-4 border-accent p-6 rounded-r-lg">
               <p className="text-foreground font-medium italic">
-                Fiscalitatea modernă nu mai tolerează improvizația; ea recompensează doar rigoarea și anticiparea.
+                Modern taxation no longer tolerates improvisation; it rewards only rigor and anticipation.
               </p>
             </div>
           </div>
@@ -100,37 +100,37 @@ export default function DesprePage() {
         <div className="h-px bg-border/60" />
       </div>
 
-      {/* Ce ne diferențiază */}
+      {/* What Sets Us Apart */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-2xl md:text-3xl font-medium text-foreground mb-8">
-              Ce ne diferențiază
+              What sets us apart
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Nu promitem „optimizări miraculoase" și nu vindem confort emoțional.
+              We don't promise "miraculous optimizations" and we don't sell emotional comfort.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              Construim liniște fiscală reală, bazată pe organizare corectă și pe o contabilitate care poate fi susținută oricând, inclusiv într-un context de control.
+              We build real tax peace of mind, based on proper organization and accounting that can be defended at any time, including in an audit context.
             </p>
-            <p className="text-lg text-foreground font-medium mb-4">Pentru noi:</p>
+            <p className="text-lg text-foreground font-medium mb-4">For us:</p>
             <ul className="space-y-3 mb-8">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">contabilitatea precede controlul,</span>
+                <span className="text-lg text-muted-foreground">accounting precedes control,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">conformarea precede sancțiunea,</span>
+                <span className="text-lg text-muted-foreground">compliance precedes sanctions,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">iar prevenția este superioară oricărei reacții tardive.</span>
+                <span className="text-lg text-muted-foreground">and prevention is superior to any delayed reaction.</span>
               </li>
             </ul>
             <div className="bg-secondary/50 border-l-4 border-accent p-6 rounded-r-lg">
               <p className="text-foreground font-medium italic">
-                Ordinea contabilă precedă liniștea fiscală.
+                Accounting order precedes tax peace of mind.
               </p>
             </div>
           </div>
@@ -142,60 +142,60 @@ export default function DesprePage() {
         <div className="h-px bg-border/60" />
       </div>
 
-      {/* Despre impozite și realitate */}
+      {/* About Taxes and Reality */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-2xl md:text-3xl font-medium text-foreground mb-8">
-              Despre impozite și realitate
+              About taxes and reality
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Acceptăm o realitate simplă și o spunem deschis:
+              We accept a simple reality and state it openly:
             </p>
             <div className="bg-primary/5 border border-primary/10 p-6 rounded-lg mb-8">
               <p className="text-xl text-foreground font-medium text-center">
-                Dacă de plata impozitelor nu scapă nimeni, atunci ele trebuie gestionate inteligent.
+                If no one escapes paying taxes, then they must be managed intelligently.
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div>
-                <p className="text-lg text-foreground font-medium mb-3">Nu prin:</p>
+                <p className="text-lg text-foreground font-medium mb-3">Not through:</p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-3">
                     <span className="w-4 h-px bg-muted-foreground/40" />
-                    <span className="text-muted-foreground">evitare</span>
+                    <span className="text-muted-foreground">avoidance</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-4 h-px bg-muted-foreground/40" />
-                    <span className="text-muted-foreground">tăcere</span>
+                    <span className="text-muted-foreground">silence</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-4 h-px bg-muted-foreground/40" />
-                    <span className="text-muted-foreground">improvizație</span>
+                    <span className="text-muted-foreground">improvisation</span>
                   </li>
                 </ul>
               </div>
               <div>
-                <p className="text-lg text-foreground font-medium mb-3">Ci prin:</p>
+                <p className="text-lg text-foreground font-medium mb-3">But through:</p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-muted-foreground">structură contabilă corectă</span>
+                    <span className="text-muted-foreground">proper accounting structure</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-muted-foreground">decizii fiscale fundamentate</span>
+                    <span className="text-muted-foreground">well-founded tax decisions</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-muted-foreground">înțelegere profundă a riscului</span>
+                    <span className="text-muted-foreground">deep understanding of risk</span>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="bg-secondary/50 border-l-4 border-accent p-6 rounded-r-lg">
               <p className="text-foreground font-medium italic">
-                Impozitele sunt o certitudine. Controlul lor începe în contabilitate.
+                Taxes are a certainty. Their control begins in accounting.
               </p>
             </div>
           </div>
@@ -207,36 +207,36 @@ export default function DesprePage() {
         <div className="h-px bg-border/60" />
       </div>
 
-      {/* Cui ne adresăm */}
+      {/* Who We Serve */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-2xl md:text-3xl font-medium text-foreground mb-8">
-              Cui ne adresăm
+              Who we serve
             </h2>
             <p className="text-xl text-foreground font-medium mb-6">
-              Nu tuturor.
+              Not everyone.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Ne adresăm antreprenorilor și companiilor care:
+              We serve entrepreneurs and companies that:
             </p>
             <ul className="space-y-4 mb-8">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">înțeleg că decizia fiscală este o decizie de business,</span>
+                <span className="text-lg text-muted-foreground">understand that tax decisions are business decisions,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">nu își permit riscuri necontrolate,</span>
+                <span className="text-lg text-muted-foreground">cannot afford uncontrolled risks,</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent mt-3 flex-shrink-0" />
-                <span className="text-lg text-muted-foreground">și doresc un partener care avertizează înainte de control, nu explică după.</span>
+                <span className="text-lg text-muted-foreground">and want a partner who warns before audits, not explains after.</span>
               </li>
             </ul>
             <div className="bg-secondary/50 border-l-4 border-accent p-6 rounded-r-lg">
               <p className="text-foreground font-medium italic">
-                Nu toate companiile au nevoie de contabilitate strategică. Doar cele care vor control real.
+                Not all companies need strategic accounting. Only those who want real control.
               </p>
             </div>
           </div>
@@ -248,55 +248,55 @@ export default function DesprePage() {
         <div className="h-px bg-border/60" />
       </div>
 
-      {/* Filosofia noastră */}
+      {/* Our Philosophy */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-2xl md:text-3xl font-medium text-foreground mb-8">
-              Filosofia noastră
+              Our philosophy
             </h2>
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div className="bg-secondary/30 p-6 rounded-lg">
-                <p className="text-lg text-foreground font-medium mb-4">Contabilul nu este:</p>
+                <p className="text-lg text-foreground font-medium mb-4">The accountant is not:</p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3">
                     <span className="w-4 h-px bg-muted-foreground/40" />
-                    <span className="text-muted-foreground">nici apărătorul statului,</span>
+                    <span className="text-muted-foreground">the defender of the state,</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-4 h-px bg-muted-foreground/40" />
-                    <span className="text-muted-foreground">nici executantul unor decizii riscante.</span>
+                    <span className="text-muted-foreground">nor the executor of risky decisions.</span>
                   </li>
                 </ul>
               </div>
               <div className="bg-accent/10 p-6 rounded-lg border border-accent/20">
-                <p className="text-lg text-foreground font-medium mb-4">Contabilul este:</p>
+                <p className="text-lg text-foreground font-medium mb-4">The accountant is:</p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-muted-foreground">interpretul corect al legii,</span>
+                    <span className="text-muted-foreground">the correct interpreter of the law,</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-muted-foreground">filtrul de risc fiscal,</span>
+                    <span className="text-muted-foreground">the tax risk filter,</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="text-muted-foreground">partenerul care spune adevărul înainte să devină problemă.</span>
+                    <span className="text-muted-foreground">the partner who tells the truth before it becomes a problem.</span>
                   </li>
                 </ul>
               </div>
             </div>
             <div className="bg-secondary/50 border-l-4 border-accent p-6 rounded-r-lg">
               <p className="text-foreground font-medium italic">
-                Imparțialitatea nu exclude loialitatea față de antreprenor. O face posibilă.
+                Impartiality does not exclude loyalty to the entrepreneur. It makes it possible.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final Section - Evolution Tax Finance */}
+      {/* Final Section */}
       <section className="py-20 md:py-28 bg-primary text-white">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
@@ -304,11 +304,11 @@ export default function DesprePage() {
               Evolution Tax Finance
             </h2>
             <p className="text-xl text-white/80 leading-relaxed mb-8">
-              O organizație financiar-contabilă construită pentru antreprenori care gândesc pe termen lung.
+              A financial-accounting organization built for entrepreneurs who think long-term.
             </p>
             <div className="bg-white/10 border border-white/20 p-8 rounded-lg mb-10">
               <p className="text-lg md:text-xl text-white font-medium italic leading-relaxed">
-                „În spatele fiecărei decizii fiscale solide există o contabilitate care a fost gândită, nu executată."
+                "Behind every solid tax decision lies accounting that was designed, not just executed."
               </p>
             </div>
             <Button
@@ -316,21 +316,10 @@ export default function DesprePage() {
               className="bg-accent hover:bg-accent/90 text-accent-foreground"
               asChild
             >
-              <Link href="/contact">
-                Programează o consultație
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-4 h-4 ml-2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                  />
+              <Link href="/en/contact">
+                Schedule a Consultation
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 ml-2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </Link>
             </Button>
@@ -349,10 +338,7 @@ export default function DesprePage() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Email</p>
-                  <a
-                    href="mailto:etftax@gmail.com"
-                    className="text-foreground hover:text-accent transition-colors font-medium"
-                  >
+                  <a href="mailto:etftax@gmail.com" className="text-foreground hover:text-accent transition-colors font-medium">
                     etftax@gmail.com
                   </a>
                 </div>
@@ -362,11 +348,8 @@ export default function DesprePage() {
                   <Phone className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Telefon</p>
-                  <a
-                    href="tel:+40744364603"
-                    className="text-foreground hover:text-accent transition-colors font-medium"
-                  >
+                  <p className="text-sm text-muted-foreground mb-1">Phone</p>
+                  <a href="tel:+40744364603" className="text-foreground hover:text-accent transition-colors font-medium">
                     +40 744 364 603
                   </a>
                 </div>
@@ -376,7 +359,7 @@ export default function DesprePage() {
         </div>
       </section>
 
-      <Footer />
+      <FooterEN />
     </main>
   );
 }

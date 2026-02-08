@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import HeaderEN from "@/components/en/HeaderEN";
+import FooterEN from "@/components/en/FooterEN";
 import { Mail, Phone } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Politica de Confidențialitate | Evolution Tax Finance",
-  description: "Informații privind protecția datelor personale și politica GDPR. Află cum protejăm datele tale conform legislației în vigoare.",
+  title: "Privacy Policy | Evolution Tax Finance",
+  description: "Information about personal data protection and GDPR policy. Learn how we protect your data in accordance with current legislation.",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "Politica de Confidențialitate - Evolution Tax Finance",
-    description: "Informații privind protecția datelor personale și politica GDPR.",
+    title: "Privacy Policy - Evolution Tax Finance",
+    description: "Information about personal data protection and GDPR policy.",
     type: "website",
-    locale: "ro_RO",
+    locale: "en_US",
   },
 };
 
-export default function ConfidentialitatePage() {
+export default function PrivacyPageEN() {
   return (
     <main className="min-h-screen">
-      <Header />
+      <HeaderEN />
 
       {/* Hero Section */}
       <section className="bg-primary py-24 pt-32">
@@ -31,10 +31,10 @@ export default function ConfidentialitatePage() {
               Legal
             </p>
             <h1 className="font-serif text-4xl md:text-5xl font-medium text-white mb-6 leading-tight">
-              Politica de confidențialitate
+              Privacy Policy
             </h1>
             <p className="text-lg text-white/70 leading-relaxed">
-              Informații privind protecția datelor cu caracter personal
+              Information about personal data protection
             </p>
           </div>
         </div>
@@ -45,161 +45,155 @@ export default function ConfidentialitatePage() {
         <div className="container">
           <div className="max-w-3xl mx-auto">
 
-            {/* Introducere */}
+            {/* Introduction */}
             <div className="mb-12">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-4">
-                1. Introducere
+                1. Introduction
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Evolution Tax Finance respectă confidențialitatea datelor cu caracter personal și se angajează să protejeze informațiile utilizatorilor site-ului. Prezenta politică de confidențialitate explică modul în care colectăm, utilizăm și protejăm datele dumneavoastră personale în conformitate cu Regulamentul General privind Protecția Datelor (GDPR).
+                Evolution Tax Finance respects the privacy of personal data and is committed to protecting users' information on our website. This privacy policy explains how we collect, use and protect your personal data in accordance with the General Data Protection Regulation (GDPR).
               </p>
             </div>
 
-            {/* Separator */}
             <div className="h-px bg-border/60 mb-12" />
 
-            {/* Date Colectate */}
+            {/* Data Collected */}
             <div className="mb-12">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-4">
-                2. Date colectate
+                2. Data collected
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Prin intermediul formularului de contact de pe site-ul nostru, putem colecta următoarele date cu caracter personal:
+                Through the contact form on our website, we may collect the following personal data:
               </p>
               <ul className="space-y-2 text-muted-foreground">
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Nume
+                  Name
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Adresa de email
+                  Email address
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Număr de telefon
+                  Phone number
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Numele companiei
+                  Company name
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Conținutul mesajului transmis
+                  Message content
                 </li>
               </ul>
             </div>
 
-            {/* Separator */}
             <div className="h-px bg-border/60 mb-12" />
 
-            {/* Scopul Colectării */}
+            {/* Purpose of Collection */}
             <div className="mb-12">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-4">
-                3. Scopul colectării datelor
+                3. Purpose of data collection
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Datele cu caracter personal sunt colectate și utilizate exclusiv în următoarele scopuri:
+                Personal data is collected and used exclusively for the following purposes:
               </p>
               <ul className="space-y-2 text-muted-foreground">
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Contactarea utilizatorilor care au transmis o solicitare prin formularul de contact
+                  Contacting users who have submitted a request through the contact form
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Furnizarea informațiilor solicitate cu privire la serviciile noastre
+                  Providing requested information about our services
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-                  Comunicare profesională legată de serviciile de contabilitate și consultanță
+                  Professional communication related to accounting and consulting services
                 </li>
               </ul>
             </div>
 
-            {/* Separator */}
             <div className="h-px bg-border/60 mb-12" />
 
-            {/* Stocarea și Securitatea */}
+            {/* Storage and Security */}
             <div className="mb-12">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-4">
-                4. Stocarea și securitatea datelor
+                4. Data storage and security
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Datele dumneavoastră personale sunt stocate în siguranță și sunt protejate prin măsuri tehnice și organizatorice adecvate împotriva accesului neautorizat, pierderii sau distrugerii.
+                Your personal data is stored securely and protected by appropriate technical and organizational measures against unauthorized access, loss or destruction.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Nu transmitem, nu vindem și nu partajăm datele dumneavoastră personale cu terțe părți, cu excepția cazurilor în care acest lucru este necesar pentru îndeplinirea obligațiilor legale.
+                We do not transmit, sell or share your personal data with third parties, except when necessary to fulfill legal obligations.
               </p>
             </div>
 
-            {/* Separator */}
             <div className="h-px bg-border/60 mb-12" />
 
-            {/* Drepturile Utilizatorilor */}
+            {/* User Rights */}
             <div className="mb-12">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-4">
-                5. Drepturile utilizatorilor
+                5. User rights
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                În conformitate cu Regulamentul GDPR, aveți următoarele drepturi cu privire la datele dumneavoastră personale:
+                In accordance with GDPR, you have the following rights regarding your personal data:
               </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
                   <div>
-                    <strong className="text-foreground">Dreptul de acces</strong> — puteți solicita o copie a datelor personale pe care le deținem despre dumneavoastră
+                    <strong className="text-foreground">Right of access</strong> — you can request a copy of the personal data we hold about you
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
                   <div>
-                    <strong className="text-foreground">Dreptul la rectificare</strong> — puteți solicita corectarea datelor inexacte sau incomplete
+                    <strong className="text-foreground">Right to rectification</strong> — you can request correction of inaccurate or incomplete data
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
                   <div>
-                    <strong className="text-foreground">Dreptul la ștergere</strong> — puteți solicita ștergerea datelor dumneavoastră personale
+                    <strong className="text-foreground">Right to erasure</strong> — you can request deletion of your personal data
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
                   <div>
-                    <strong className="text-foreground">Dreptul la opoziție</strong> — puteți să vă opuneți prelucrării datelor în anumite circumstanțe
+                    <strong className="text-foreground">Right to object</strong> — you can object to data processing in certain circumstances
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
                   <div>
-                    <strong className="text-foreground">Dreptul la portabilitate</strong> — puteți solicita transferul datelor către un alt operator
+                    <strong className="text-foreground">Right to portability</strong> — you can request transfer of data to another operator
                   </div>
                 </li>
               </ul>
               <p className="text-muted-foreground leading-relaxed mt-4">
-                Pentru a vă exercita oricare dintre aceste drepturi, vă rugăm să ne contactați folosind datele de mai jos.
+                To exercise any of these rights, please contact us using the details below.
               </p>
             </div>
 
-            {/* Separator */}
             <div className="h-px bg-border/60 mb-12" />
 
-            {/* Date de Contact */}
+            {/* Contact Details */}
             <div className="mb-8">
               <h2 className="font-serif text-2xl font-medium text-foreground mb-6">
-                6. Date de contact
+                6. Contact details
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Pentru orice întrebări sau solicitări privind datele dumneavoastră personale, ne puteți contacta la:
+                For any questions or requests regarding your personal data, you can contact us at:
               </p>
 
-              {/* Company Details */}
               <div className="bg-secondary/50 rounded-lg p-6 mb-6">
                 <div className="space-y-2 text-muted-foreground">
                   <p><strong className="text-foreground">Evolution Tax Finance SRL</strong></p>
                   <p>Str. Sarafinesti 16, sector 2</p>
-                  <p>București</p>
-                  <p><strong className="text-foreground">CUI:</strong> 35486370</p>
+                  <p>Bucharest, Romania</p>
+                  <p><strong className="text-foreground">Tax ID:</strong> 35486370</p>
                 </div>
               </div>
 
@@ -210,10 +204,7 @@ export default function ConfidentialitatePage() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <a
-                      href="mailto:etftax@gmail.com"
-                      className="text-foreground hover:text-accent transition-colors"
-                    >
+                    <a href="mailto:etftax@gmail.com" className="text-foreground hover:text-accent transition-colors">
                       etftax@gmail.com
                     </a>
                   </div>
@@ -223,11 +214,8 @@ export default function ConfidentialitatePage() {
                     <Phone className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Telefon</p>
-                    <a
-                      href="tel:+40744364603"
-                      className="text-foreground hover:text-accent transition-colors"
-                    >
+                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <a href="tel:+40744364603" className="text-foreground hover:text-accent transition-colors">
                       +40 744 364 603
                     </a>
                   </div>
@@ -238,7 +226,7 @@ export default function ConfidentialitatePage() {
             {/* Last Updated */}
             <div className="pt-8 border-t border-border/60">
               <p className="text-sm text-muted-foreground/70">
-                Ultima actualizare: Ianuarie 2026
+                Last updated: February 2026
               </p>
             </div>
 
@@ -246,7 +234,7 @@ export default function ConfidentialitatePage() {
         </div>
       </section>
 
-      <Footer />
+      <FooterEN />
     </main>
   );
 }

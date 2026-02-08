@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const navigation = [
   { name: "Acasă", href: "/" },
@@ -55,6 +56,7 @@ export default function Header() {
           >
             <Link href="/contact#formular">Consultație gratuită</Link>
           </Button>
+          <LanguageSwitcher currentLang="ro" />
         </div>
 
         {/* Mobile menu button */}
@@ -121,6 +123,9 @@ export default function Header() {
             >
               <Link href="/contact#formular">Consultație gratuită</Link>
             </Button>
+            <div className="flex justify-center pt-4">
+              <LanguageSwitcher currentLang="ro" />
+            </div>
           </div>
         </div>
       )}

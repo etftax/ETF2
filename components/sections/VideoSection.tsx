@@ -39,27 +39,21 @@ export default function VideoSection() {
             </div>
           </div>
 
-          {/* Video Placeholder */}
+          {/* Video YouTube */}
           <div className="relative">
-            <div className="aspect-video rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 bg-[url('/images/despre-birou.jpg')] bg-cover bg-center opacity-50" />
-              <button
-                type="button"
-                className="relative z-10 w-20 h-20 rounded-full bg-background/90 hover:bg-background flex items-center justify-center transition-colors group"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  className="w-8 h-8 text-primary ml-1 group-hover:scale-110 transition-transform"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </button>
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/rNFdiGETmPI?si=jpm8rQ5szTSMO9px"
+                title="Evolution Tax Finance - Video de prezentare"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full h-full"
+              />
             </div>
-            <p className="text-center text-sm text-muted-foreground mt-4">
-              Video de prezentare (placeholder)
-            </p>
           </div>
         </div>
       </div>

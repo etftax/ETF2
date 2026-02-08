@@ -2,22 +2,22 @@ const videos = [
   {
     id: 1,
     title: "Prezentare servicii contabilitate",
-    placeholder: true,
+    youtubeId: "_ahvCja8MpQ",
   },
   {
     id: 2,
     title: "Consultanță fiscală - Cum funcționează",
-    placeholder: true,
+    youtubeId: "_ahvCja8MpQ",
   },
   {
     id: 3,
     title: "Testimoniale clienți",
-    placeholder: true,
+    youtubeId: "r6XmyipDLVg",
   },
   {
     id: 4,
     title: "Despre Evolution Tax Finance",
-    placeholder: true,
+    youtubeId: "tEQLqzRRQ2o",
   },
 ];
 
@@ -43,44 +43,22 @@ export default function VideoGridSection() {
           {videos.map((video) => (
             <div
               key={video.id}
-              className="group relative aspect-video rounded-xl overflow-hidden bg-primary/5 border border-border hover:border-accent/30 transition-all duration-300"
+              className="group relative aspect-video rounded-xl overflow-hidden bg-primary/5 border border-border hover:border-accent/30 transition-all duration-300 shadow-sm"
             >
-              {/* Video Placeholder */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                {/* Play Button */}
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    className="w-8 h-8 md:w-10 md:h-10 text-accent ml-1"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-
-                {/* Video Title */}
-                <h3 className="text-foreground font-medium text-center text-sm md:text-base">
-                  {video.title}
-                </h3>
-
-                {/* Placeholder Text */}
-                <p className="text-muted-foreground text-xs md:text-sm mt-2 text-center">
-                  Video în curând
-                </p>
-              </div>
-
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* YouTube Iframe */}
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${video.youtubeId}`}
+                title={video.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full h-full"
+              />
             </div>
           ))}
-        </div>
-
-        {/* Optional: Call to action */}
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground text-sm">
-            Mai multe videoclipuri vor fi adăugate în curând.
-          </p>
         </div>
       </div>
     </section>

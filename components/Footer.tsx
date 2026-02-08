@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const footerLinks = {
   servicii: [
@@ -67,7 +68,7 @@ export default function Footer() {
             <div className="text-primary-foreground/60 text-sm space-y-1 mb-6">
               <p>
                 <strong className="text-primary-foreground">Adresă:</strong>{" "}
-                Str. Sărafinești 16, Sector 2, București
+                Str. Sarafinesti 16, sector 2, București
               </p>
               <p>
                 <strong className="text-primary-foreground">CUI:</strong> 35486370
@@ -158,7 +159,7 @@ export default function Footer() {
               ))}
             </ul>
             <h4 className="text-primary-foreground font-medium mb-4">Informații legale</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 mb-6">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
                   <a
@@ -186,6 +187,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            <div className="pt-2">
+              <LanguageSwitcher currentLang="ro" />
+            </div>
           </div>
 
           {/* Contact */}

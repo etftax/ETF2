@@ -203,7 +203,7 @@ export default function ContactFormSection() {
                 <div>
                   <p className="text-sm text-muted-foreground">Adresă</p>
                   <p className="text-foreground font-medium">
-                    Str. Sărafinești 16, Sector 2, București
+                    Str. Sarafinesti 16, sector 2, București
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
                     Evolution Tax Finance SRL | CUI: 35486370
