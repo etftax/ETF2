@@ -211,4 +211,4 @@ export default function ContactFormSection() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="text-sm font-medium text-foreground mb<span class="cursor">█</span>
+                    className="text-sm font-medium text-foreground mb-2 block"
