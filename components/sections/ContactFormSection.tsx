@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,14 +23,12 @@ export default function ContactFormSection() {
     setIsSubmitting(true);
     setError("");
 
-    // Basic validation
     if (!formData.name || !formData.email || !formData.phone) {
       setError("Vă rugăm completați toate câmpurile obligatorii.");
       setIsSubmitting(false);
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError("Adresa de email nu este validă.");
@@ -39,49 +37,18 @@ export default function ContactFormSection() {
     }
 
     try {
-      // Submit to Netlify Forms
-      const formDataEncoded = new URLSearchParams();
-      formDataEncoded.append("form-name", "contact");
-      formDataEncoded.append("name", formData.name);
-      formDataEncoded.append("email", formData.email);
-      formDataEncoded.append("phone", formData.phone);
-      formDataEncoded.append("company", formData.company || "");
-      formDataEncoded.append("message", formData.message || "");
-
-      const response = await fetch("/", {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formDataEncoded.toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Eroare la trimiterea mesajului");
-      }
+      if (!response.ok) throw new Error("Eroare la trimiterea mesajului");
 
       setIsSubmitted(true);
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
     } catch (err) {
-      // Fallback to API route if Netlify Forms fails
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-          throw new Error("Eroare la trimiterea mesajului");
-        }
-
-        setIsSubmitted(true);
-        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-      } catch (fallbackErr) {
-        setError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
-      }
+      setError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
     } finally {
       setIsSubmitting(false);
     }
@@ -89,15 +56,6 @@ export default function ContactFormSection() {
 
   return (
     <section className="py-24 bg-secondary" id="formular">
-      {/* Hidden Netlify form for detection */}
-      <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <input type="tel" name="phone" />
-        <input type="text" name="company" />
-        <textarea name="message" />
-      </form>
-
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -136,10 +94,6 @@ export default function ContactFormSection() {
                   <a
                     href="tel:+40744364603"
                     className="text-foreground font-medium hover:text-accent transition-colors"
-                    data-gtag="click"
-                    data-gtag-category="contact"
-                    data-gtag-action="phone_click"
-                    data-gtag-label="contact_section_phone"
                   >
                     +40 744 364 603
                   </a>
@@ -168,10 +122,6 @@ export default function ContactFormSection() {
                   <a
                     href="mailto:etftax@gmail.com"
                     className="text-foreground font-medium hover:text-accent transition-colors"
-                    data-gtag="click"
-                    data-gtag-category="contact"
-                    data-gtag-action="email_click"
-                    data-gtag-label="contact_section_email"
                   >
                     etftax@gmail.com
                   </a>
@@ -251,21 +201,7 @@ export default function ContactFormSection() {
                 </Button>
               </div>
             ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-5"
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-              >
-                <input type="hidden" name="form-name" value="contact" />
-                <p className="hidden">
-                  <label>
-                    Nu completa acest câmp: <input name="bot-field" />
-                  </label>
-                </p>
-
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {error && (
                   <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
                     {error}
@@ -275,161 +211,4 @@ export default function ContactFormSection() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="text-sm font-medium text-foreground mb-2 block"
-                  >
-                    Nume complet <span className="text-destructive">*</span>
-                  </label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Numele dumneavoastră"
-                    value={formData.name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                    className="h-12 border-border focus:border-accent focus:ring-accent/20"
-                  />
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="text-sm font-medium text-foreground mb-2 block"
-                    >
-                      Email <span className="text-destructive">*</span>
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="email@companie.ro"
-                      value={formData.email}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      required
-                      className="h-12 border-border focus:border-accent focus:ring-accent/20"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className="text-sm font-medium text-foreground mb-2 block"
-                    >
-                      Telefon <span className="text-destructive">*</span>
-                    </label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+40 7XX XXX XXX"
-                      value={formData.phone}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      required
-                      className="h-12 border-border focus:border-accent focus:ring-accent/20"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="company"
-                    className="text-sm font-medium text-foreground mb-2 block"
-                  >
-                    Companie <span className="text-muted-foreground text-xs">(opțional)</span>
-                  </label>
-                  <Input
-                    id="company"
-                    name="company"
-                    type="text"
-                    placeholder="Numele companiei"
-                    value={formData.company}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, company: e.target.value })
-                    }
-                    className="h-12 border-border focus:border-accent focus:ring-accent/20"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="text-sm font-medium text-foreground mb-2 block"
-                  >
-                    Mesaj <span className="text-muted-foreground text-xs">(opțional)</span>
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    placeholder="Descrieți pe scurt nevoile afacerii dumneavoastră..."
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    className="border-border focus:border-accent focus:ring-accent/20 resize-none"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-12 text-base font-medium"
-                  disabled={isSubmitting}
-                  data-gtag="click"
-                  data-gtag-category="form"
-                  data-gtag-action="form_submit"
-                  data-gtag-label="contact_form_submit"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-accent-foreground"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
-                      </svg>
-                      Se trimite...
-                    </>
-                  ) : (
-                    "Trimite mesajul"
-                  )}
-                </Button>
-
-                <p className="text-xs text-center text-muted-foreground pt-2">
-                  Prin trimiterea formularului, ești de acord cu{" "}
-                  <Link
-                    href="/confidentialitate"
-                    className="text-accent hover:underline"
-                  >
-                    politica de confidențialitate
-                  </Link>
-                  .
-                </p>
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+                    className="text-sm font-medium text-foreground mb<span class="cursor">█</span>
