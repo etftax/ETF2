@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,8 +16,8 @@ export default function ContactFormSection() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,8 +46,7 @@ export default function ContactFormSection() {
 
       if (!response.ok) throw new Error("Eroare la trimiterea mesajului");
 
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      router.push("/multumim");
     } catch (err) {
       setError("A aparut o eroare. Va rugam incercati din nou sau contactati-ne direct la telefon.");
     } finally {
@@ -108,23 +108,10 @@ export default function ContactFormSection() {
             </div>
           </div>
           <div className="bg-card rounded-xl p-8 border border-border shadow-lg">
-            {isSubmitted ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 text-accent">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-medium text-foreground mb-3">Mesajul a fost trimis cu succes!</h3>
-                <p className="text-muted-foreground mb-2">Multumim pentru mesaj.</p>
-                <p className="text-muted-foreground mb-6">Un consultant din echipa noastra te va contacta in maximum <strong className="text-foreground">4 ore lucratoare</strong>.</p>
-                <Button variant="outline" onClick={() => setIsSubmitted(false)} className="border-border text-foreground hover:bg-secondary">Trimite alt mesaj</Button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {error && (
-                  <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">{error}</div>
-                )}
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">{error}</div>
+              )}
                 <div>
                   <label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">Nume complet <span className="text-destructive">*</span></label>
                   <Input id="name" name="name" type="text" placeholder="Numele dumneavoastra" value={formData.name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })} required className="h-12 border-border focus:border-accent focus:ring-accent/20" />
@@ -154,8 +141,7 @@ export default function ContactFormSection() {
                   Prin trimiterea formularului, esti de acord cu{" "}
                   <Link href="/confidentialitate" className="text-accent hover:underline">politica de confidentialitate</Link>.
                 </p>
-              </form>
-            )}
+            </form>
           </div>
         </div>
       </div>

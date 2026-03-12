@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -17,9 +18,9 @@ export default function ContactPage() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
+  const router = useRouter();
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -76,9 +77,7 @@ export default function ContactPage() {
         throw new Error("Eroare la trimiterea mesajului");
       }
 
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-      setErrors({});
+      router.push("/multumim");
     } catch (err) {
       // Fallback to API route if Netlify Forms fails
       try {
@@ -94,9 +93,7 @@ export default function ContactPage() {
           throw new Error("Eroare la trimiterea mesajului");
         }
 
-        setIsSubmitted(true);
-        setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-        setErrors({});
+        router.push("/multumim");
       } catch (fallbackErr) {
         setSubmitError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
       }
@@ -232,32 +229,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <Card className="border-border shadow-lg bg-card">
               <CardContent className="p-8 md:p-10">
-                {isSubmitted ? (
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 text-accent">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-medium text-foreground mb-3">
-                      Mesajul a fost trimis cu succes!
-                    </h3>
-                    <p className="text-muted-foreground mb-2">
-                      Mulțumim pentru mesaj.
-                    </p>
-                    <p className="text-muted-foreground mb-6">
-                      Un consultant din echipa noastră vă va contacta în maximum <strong className="text-foreground">4 ore lucrătoare</strong>.
-                    </p>
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsSubmitted(false)}
-                      className="border-border text-foreground hover:bg-secondary"
-                    >
-                      Trimite alt mesaj
-                    </Button>
-                  </div>
-                ) : (
-                  <>
+                <>
                     <h3 className="text-xl font-medium text-foreground mb-2">
                       Trimite-ne un mesaj
                     </h3>
@@ -408,8 +380,7 @@ export default function ContactPage() {
                         </p>
                       </div>
                     </form>
-                  </>
-                )}
+                </>
               </CardContent>
             </Card>
           </div>
