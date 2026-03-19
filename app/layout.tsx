@@ -48,6 +48,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MC43KHST');`}
         </Script>
         {/* End Google Tag Manager */}
+        {/* Google Ads tag */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18011332866"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18011332866');`}
+        </Script>
+        {/* End Google Ads tag */}
         <Script
           crossOrigin="anonymous"
           src="//unpkg.com/same-runtime/dist/index.global.js"
