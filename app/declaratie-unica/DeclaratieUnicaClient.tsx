@@ -1,15 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Script from "next/script";
 import "./declaratie-unica.css";
 
 declare global {
   interface Window {
-    emailjs: {
-      init: (options: { publicKey: string }) => void;
-      send: (serviceId: string, templateId: string, params: Record<string, string>) => Promise<{ status: number }>;
-    };
     dataLayer: Record<string, unknown>[];
     gtag?: (...args: unknown[]) => void;
     fbq?: (...args: unknown[]) => void;
@@ -123,14 +118,20 @@ export default function DeclaratieUnicaClient() {
       : "💰 Pachet 497 LEI (sună leadul)";
 
     try {
-      await window.emailjs.send("service_ru4rwk8", "template_rqb85dm", {
-        from_name: name,
-        phone,
-        situation: situation || "Nespecificat",
-        variant: variantLabel,
-        source: "Site ETF - Declaratie Unica",
-        submitted_at: submittedAt,
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          situation: situation || "Nespecificat",
+          variant: variantLabel,
+          source: "Site ETF - Declaratie Unica",
+          submitted_at: submittedAt,
+        }),
       });
+
+      if (!response.ok) throw new Error("Eroare la trimitere");
 
       const eventName = modalVariant === "lead" ? "lead_magnet_submit" : "form_submit_callback";
       trackEvent(eventName);
@@ -238,14 +239,6 @@ export default function DeclaratieUnicaClient() {
 
   return (
     <>
-      {/* EmailJS SDK */}
-      <Script
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
-        strategy="lazyOnload"
-        onLoad={() => {
-          window.emailjs?.init({ publicKey: "CbLOcioIyHXkDdZdo" });
-        }}
-      />
 
       <div className="du-wrap">
         <div className="du-page-bg">

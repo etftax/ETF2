@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Script from "next/script";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,15 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-
-declare global {
-  interface Window {
-    emailjs: {
-      init: (options: { publicKey: string }) => void;
-      send: (serviceId: string, templateId: string, params: Record<string, string>) => Promise<{ status: number }>;
-    };
-  }
-}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -31,7 +21,6 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
-  const [emailjsReady, setEmailjsReady] = useState(false);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -66,27 +55,14 @@ export default function ContactPage() {
     setIsSubmitting(true);
     setSubmitError("");
 
-    const now = new Date();
-    const submittedAt = now.toLocaleString("ro-RO", {
-      day: "2-digit", month: "2-digit", year: "numeric",
-      hour: "2-digit", minute: "2-digit",
-    });
-
-    const situationDetails = [
-      `Email: ${formData.email}`,
-      formData.company ? `Companie: ${formData.company}` : null,
-      formData.message ? `Mesaj: ${formData.message}` : null,
-    ].filter(Boolean).join(" | ");
-
     try {
-      await window.emailjs.send("service_ru4rwk8", "template_rqb85dm", {
-        from_name: formData.name,
-        phone: formData.phone,
-        situation: situationDetails || "Nespecificat",
-        variant: "📩 Formular Contact General",
-        source: "Site ETF - Pagina Contact",
-        submitted_at: submittedAt,
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) throw new Error("Eroare la trimitere");
 
       router.push("/multumim");
     } catch {
@@ -98,14 +74,6 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <Script
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
-        strategy="lazyOnload"
-        onLoad={() => {
-          window.emailjs?.init({ publicKey: "CbLOcioIyHXkDdZdo" });
-          setEmailjsReady(true);
-        }}
-      />
       {/* Hidden Netlify form for detection */}
       <form name="contact-page" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
@@ -351,7 +319,7 @@ export default function ContactPage() {
                         type="submit"
                         size="lg"
                         className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-12 text-base font-medium mt-2"
-                        disabled={isSubmitting || !emailjsReady}
+                        disabled={isSubmitting}
                         data-gtag="click"
                         data-gtag-category="form"
                         data-gtag-action="form_submit"
