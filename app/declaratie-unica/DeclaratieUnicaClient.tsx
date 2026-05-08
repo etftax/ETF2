@@ -42,7 +42,7 @@ function getCountdown(): CountdownState {
 }
 
 export default function DeclaratieUnicaClient() {
-  const [countdown, setCountdown] = useState<CountdownState>(getCountdown());
+  const [countdown, setCountdown] = useState<CountdownState>({ days: "--", hours: "--", mins: "--", secs: "--" });
   const [modalOpen, setModalOpen] = useState(false);
   const [modalVariant, setModalVariant] = useState<ModalVariant>("callback");
   const [formSuccess, setFormSuccess] = useState(false);
@@ -52,6 +52,7 @@ export default function DeclaratieUnicaClient() {
   const modalSourceRef = useRef("");
 
   useEffect(() => {
+    setCountdown(getCountdown());
     const interval = setInterval(() => setCountdown(getCountdown()), 1000);
     return () => clearInterval(interval);
   }, []);
