@@ -9,6 +9,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 const navigation = [
   { name: "Acasă", href: "/" },
   { name: "Servicii", href: "/servicii" },
+  { name: "Ofertă", href: "/declaratie-unica" },
   { name: "Despre", href: "/despre" },
   { name: "Contact", href: "/contact" },
 ];
