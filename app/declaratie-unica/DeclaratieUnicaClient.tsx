@@ -578,7 +578,6 @@ export default function DeclaratieUnicaClient() {
           </section>
 
         </div>
-      </div>
 
       {/* STICKY MOBILE BAR */}
       {stickyVisible && (
@@ -667,6 +666,7 @@ export default function DeclaratieUnicaClient() {
             </div>
           )}
         </div>
+      </div>
       </div>
     </>
   );

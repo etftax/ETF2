@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import Script from "next/script";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+
+declare global {
+  interface Window {
+    emailjs: {
+      init: (options: { publicKey: string }) => void;
+      send: (serviceId: string, templateId: string, params: Record<string, string>) => Promise<{ status: number }>;
+    };
+  }
+}
 
 export default function ContactFormSection() {
   const [formData, setFormData] = useState({
@@ -37,14 +47,27 @@ export default function ContactFormSection() {
       return;
     }
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    const now = new Date();
+    const submittedAt = now.toLocaleString("ro-RO", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
+    });
 
-      if (!response.ok) throw new Error("Eroare la trimiterea mesajului");
+    const situationDetails = [
+      `Email: ${formData.email}`,
+      formData.company ? `Companie: ${formData.company}` : null,
+      formData.message ? `Mesaj: ${formData.message}` : null,
+    ].filter(Boolean).join(" | ");
+
+    try {
+      await window.emailjs.send("service_ru4rwk8", "template_rqb85dm", {
+        from_name: formData.name,
+        phone: formData.phone,
+        situation: situationDetails || "Nespecificat",
+        variant: "📩 Formular Contact General",
+        source: "Site ETF - Homepage Contact",
+        submitted_at: submittedAt,
+      });
 
       router.push("/multumim");
     } catch (err) {
@@ -55,6 +78,12 @@ export default function ContactFormSection() {
   };
 
   return (
+    <>
+    <Script
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+      strategy="lazyOnload"
+      onLoad={() => { window.emailjs?.init({ publicKey: "CbLOcioIyHXkDdZdo" }); }}
+    />
     <section className="py-24 bg-secondary" id="formular">
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -146,5 +175,6 @@ export default function ContactFormSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }

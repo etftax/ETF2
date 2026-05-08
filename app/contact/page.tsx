@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Script from "next/script";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,6 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+
+declare global {
+  interface Window {
+    emailjs: {
+      init: (options: { publicKey: string }) => void;
+      send: (serviceId: string, templateId: string, params: Record<string, string>) => Promise<{ status: number }>;
+    };
+  }
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -21,6 +31,7 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
+  const [emailjsReady, setEmailjsReady] = useState(false);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -55,48 +66,31 @@ export default function ContactPage() {
     setIsSubmitting(true);
     setSubmitError("");
 
-    try {
-      // Submit to Netlify Forms
-      const formDataEncoded = new URLSearchParams();
-      formDataEncoded.append("form-name", "contact-page");
-      formDataEncoded.append("name", formData.name);
-      formDataEncoded.append("email", formData.email);
-      formDataEncoded.append("phone", formData.phone);
-      formDataEncoded.append("company", formData.company || "");
-      formDataEncoded.append("message", formData.message || "");
+    const now = new Date();
+    const submittedAt = now.toLocaleString("ro-RO", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
+    });
 
-      const response = await fetch("/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formDataEncoded.toString(),
+    const situationDetails = [
+      `Email: ${formData.email}`,
+      formData.company ? `Companie: ${formData.company}` : null,
+      formData.message ? `Mesaj: ${formData.message}` : null,
+    ].filter(Boolean).join(" | ");
+
+    try {
+      await window.emailjs.send("service_ru4rwk8", "template_rqb85dm", {
+        from_name: formData.name,
+        phone: formData.phone,
+        situation: situationDetails || "Nespecificat",
+        variant: "📩 Formular Contact General",
+        source: "Site ETF - Pagina Contact",
+        submitted_at: submittedAt,
       });
 
-      if (!response.ok) {
-        throw new Error("Eroare la trimiterea mesajului");
-      }
-
       router.push("/multumim");
-    } catch (err) {
-      // Fallback to API route if Netlify Forms fails
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-          throw new Error("Eroare la trimiterea mesajului");
-        }
-
-        router.push("/multumim");
-      } catch (fallbackErr) {
-        setSubmitError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
-      }
+    } catch {
+      setSubmitError("A apărut o eroare. Vă rugăm încercați din nou sau contactați-ne direct la telefon.");
     } finally {
       setIsSubmitting(false);
     }
@@ -104,6 +98,14 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-white">
+      <Script
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          window.emailjs?.init({ publicKey: "CbLOcioIyHXkDdZdo" });
+          setEmailjsReady(true);
+        }}
+      />
       {/* Hidden Netlify form for detection */}
       <form name="contact-page" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input type="text" name="name" />
@@ -349,7 +351,7 @@ export default function ContactPage() {
                         type="submit"
                         size="lg"
                         className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-12 text-base font-medium mt-2"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !emailjsReady}
                         data-gtag="click"
                         data-gtag-category="form"
                         data-gtag-action="form_submit"
