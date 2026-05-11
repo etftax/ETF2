@@ -370,9 +370,9 @@ export default function DeclaratieUnicaClient() {
                   <p>Verificare dublă pe fiecare declarație, înainte de depunere. Atenție la fiecare detaliu.</p>
                 </div>
                 <div className="du-whyus-card">
-                  <div className="du-whyus-num">4 ore</div>
+                  <div className="du-whyus-num">30 minute</div>
                   <h3>Timp de răspuns</h3>
-                  <p>Nu te lăsăm să aștepți zile întregi. Suni acum, vorbim cu tine în maxim 4 ore lucrătoare.</p>
+                  <p>Nu te lăsăm să aștepți zile întregi. Suni acum, vorbim cu tine în maxim 30 minute.</p>
                 </div>
               </div>
               <div className="du-whyus-signature">
@@ -470,7 +470,7 @@ export default function DeclaratieUnicaClient() {
 
               <div className="du-scarcity-real">
                 <div className="du-scarcity-real-title">Cu cât te apropii de deadline 25 mai, cu atât echipa noastră e mai aglomerată</div>
-                <p><strong>Acum:</strong> răspundem în maxim 4 ore, declarația în aceeași zi.</p>
+                <p><strong>Acum:</strong> răspundem în maxim 30 minute, declarația în aceeași zi.</p>
                 <p><strong>Ultima săptămână înainte de deadline:</strong> 24-48h.</p>
                 <p><strong>Ultimele 2 zile:</strong> probabil nu mai putem prelua clienți noi.</p>
               </div>
@@ -604,9 +604,9 @@ export default function DeclaratieUnicaClient() {
                 className="du-modal-variant-tag"
                 style={{ background: isLead ? "#f1b500" : "#2e8b57" }}
               >
-                {isLead ? "Verificare GRATUITĂ" : "100% Gratuit • Răspuns în 4 ore"}
+                {isLead ? "Verificare GRATUITĂ" : "100% Gratuit • Răspuns în 30 minute"}
               </span>
-              <h3>{isLead ? "Verificare gratuită în 5 minute" : "Te sunăm noi în maxim 4 ore"}</h3>
+              <h3>{isLead ? "Verificare gratuită în 5 minute" : "Te sunăm noi în maxim 30 minute"}</h3>
               <p className="du-modal-sub">
                 {isLead
                   ? "Te sunăm și verificăm împreună dacă trebuie să depui Declarația Unică în 2026 și ce documente îți trebuie. Fără obligații, fără costuri."
@@ -654,7 +654,7 @@ export default function DeclaratieUnicaClient() {
             <div className="du-form-success">
               <div className="du-form-success-icon">✓</div>
               <h3>Mulțumim!</h3>
-              <p>Te sunăm în maxim 4 ore.</p>
+              <p>Te sunăm în maxim 30 minute.</p>
               <p>Pentru urgențe, sună direct la <strong>+40 760 937 133</strong></p>
             </div>
           )}
