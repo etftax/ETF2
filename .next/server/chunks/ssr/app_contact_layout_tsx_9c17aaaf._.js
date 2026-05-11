@@ -1,3 +1,0 @@
-module.exports=[25940,a=>{"use strict";a.i(65613);var b=a.i(7997);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Contact | Evolution Tax Finance - Consultanță Contabilitate",description:"Contactează-ne pentru servicii de contabilitate și consultanță fiscală. Programează o consultație gratuită. Răspundem în maximum 4 ore lucrătoare.",robots:{index:!0,follow:!0},openGraph:{title:"Contact - Evolution Tax Finance",description:"Contactează-ne pentru servicii de contabilitate și consultanță fiscală. Programează o consultație gratuită.",type:"website",locale:"ro_RO"}}])}];
-
-//# sourceMappingURL=app_contact_layout_tsx_9c17aaaf._.js.map
