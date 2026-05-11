@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git add *)",
+      "Bash(git checkout *)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(findstr /i \"resend\\\\|dependencies\")",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "Bash(dir components *)",
+      "Bash(dir app *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npm run *)",
+      "Bash(git commit -m 'fix: resolve hydration mismatch on countdown timer *)",
+      "Bash(git push *)",
+      "Bash(netlify status *)",
+      "Bash(npx netlify *)"
+    ]
+  }
+}

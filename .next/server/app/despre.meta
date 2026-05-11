@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/despre/layout,_N_T_/despre/page,_N_T_/despre"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/despre/__PAGE__",
+    "/despre",
+    "/_index",
+    "/_head"
+  ]
+}

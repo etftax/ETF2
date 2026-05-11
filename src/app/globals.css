@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Premium color palette - Navy blue & elegant grays */
+    --background: 210 20% 98%;
+    --foreground: 215 35% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 35% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 35% 15%;
+    --primary: 215 55% 22%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 25% 95%;
+    --secondary-foreground: 215 35% 15%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 15% 45%;
+    --accent: 215 70% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 215 55% 22%;
+    --radius: 0.5rem;
+    --chart-1: 215 70% 45%;
+    --chart-2: 215 55% 22%;
+    --chart-3: 215 15% 45%;
+    --chart-4: 210 20% 94%;
+    --chart-5: 210 25% 95%;
+  }
+
+  .dark {
+    --background: 215 35% 10%;
+    --foreground: 210 20% 98%;
+    --card: 215 35% 12%;
+    --card-foreground: 210 20% 98%;
+    --popover: 215 35% 12%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 215 70% 55%;
+    --primary-foreground: 215 35% 10%;
+    --secondary: 215 30% 18%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 30% 18%;
+    --muted-foreground: 215 15% 60%;
+    --accent: 215 70% 55%;
+    --accent-foreground: 215 35% 10%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 30% 20%;
+    --input: 215 30% 20%;
+    --ring: 215 70% 55%;
+    --chart-1: 215 70% 55%;
+    --chart-2: 215 55% 35%;
+    --chart-3: 215 15% 55%;
+    --chart-4: 215 30% 25%;
+    --chart-5: 215 30% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-medium;
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+  .font-sans {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Smooth scroll offset for anchor links (accounts for fixed header) */
+[id] {
+  scroll-margin-top: 100px;
+}
+
+/* Hero Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-slow-zoom {
+  animation: slow-zoom 20s ease-out forwards;
+}
