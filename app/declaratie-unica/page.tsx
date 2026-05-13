@@ -68,10 +68,10 @@ const jsonLdFaq = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Pot să completez declarația singur, gratuit pe site-ul ANAF. De ce să plătesc 497 LEI?",
+      name: "De ce să folosesc serviciile ETF?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Da, poți. Dar gândește-te la timp (5-10 ore), risc (amenzi pentru greșeli) și bani pierduți (impozit calculat greșit). Pentru cazuri cu chirii, străinătate, PFA, dividende sau cripto, 497 LEI e o asigurare care te scutește de mii de lei în greșeli și amenzi.",
+        text: "Da, poți completa singur. Dar gândește-te la timp (5-10 ore), risc (amenzi pentru greșeli) și bani pierduți (impozit calculat greșit). Pentru cazuri cu chirii, străinătate, PFA, dividende sau cripto, serviciul nostru e o asigurare care te scutește de mii de lei în greșeli și amenzi.",
       },
     },
     {
@@ -103,7 +103,7 @@ const jsonLdFaq = {
       name: "Ce este SPV și de ce am nevoie de cont?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "SPV (Spațiul Privat Virtual) este platforma online ANAF prin care depui declarațiile. Asistență SPV inclusă în pachetul de 497 LEI.",
+        text: "SPV (Spațiul Privat Virtual) este platforma online ANAF prin care depui declarațiile. Începând cu 2024, depunerea online este obligatorie pentru majoritatea contribuabililor. Asistență SPV inclusă — te ghidăm cu contul SPV și îți explicăm cum funcționează, totul inclus în pachetul de 497 LEI.",
       },
     },
   ],

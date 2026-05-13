@@ -44,6 +44,8 @@ export default function DeclaratieUnicaClient() {
   const [submitting, setSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [stickyVisible, setStickyVisible] = useState(true);
+  const [inlineSubmitting, setInlineSubmitting] = useState(false);
+  const [inlineSuccess, setInlineSuccess] = useState(false);
   const modalSourceRef = useRef("");
 
   useEffect(() => {
@@ -143,11 +145,54 @@ export default function DeclaratieUnicaClient() {
     }
   }
 
+  async function submitInlineForm(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const phone = (form.elements.namedItem("inlinePhone") as HTMLInputElement).value.trim();
+    const name = (form.elements.namedItem("inlineName") as HTMLInputElement).value.trim();
+    const situation = (form.elements.namedItem("inlineSituation") as HTMLSelectElement)?.value || "";
+
+    if (!phone || phone.length < 9) { alert("Te rugăm să introduci un număr de telefon valid."); return; }
+    if (!name) { alert("Te rugăm să introduci numele."); return; }
+
+    setInlineSubmitting(true);
+
+    const now = new Date();
+    const submittedAt = now.toLocaleString("ro-RO", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
+    });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          situation: situation || "Nespecificat",
+          variant: "💰 Pachet 497 LEI (sună leadul)",
+          source: "Site ETF - Declaratie Unica - Formular inline",
+          submitted_at: submittedAt,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Eroare la trimitere");
+
+      trackEvent("form_submit_inline");
+      setInlineSuccess(true);
+    } catch {
+      alert("A apărut o eroare la trimitere. Te rugăm să suni direct la 0760 937 133 sau să ne dai mesaj pe WhatsApp.");
+    } finally {
+      setInlineSubmitting(false);
+    }
+  }
+
   const isLead = modalVariant === "lead";
 
   const faqItems = [
     {
-      q: "Pot să completez declarația singur, gratuit pe site-ul ANAF. De ce să plătesc 497 LEI?",
+      q: "De ce să folosesc serviciile ETF?",
       a: (
         <>
           <p>Da, poți. Dar înainte să decizi, gândește-te la ce înseamnă asta:</p>
@@ -156,7 +201,7 @@ export default function DeclaratieUnicaClient() {
             <li><strong>Risc:</strong> dacă ratezi un venit (de ex. dividende reinvestite, venit din străinătate, cripto cu pierderi), ANAF te poate amenda sau recalcula.</li>
             <li><strong>Bani pierduți:</strong> multe persoane completează greșit și plătesc impozit mai mare decât trebuie — nu știu să folosească deducerile aplicabile.</li>
           </ul>
-          <p>Pentru cazuri simple (un singur tip de venit, sumă mică) — poți încerca singur. Pentru cazuri cu chirii + străinătate, PFA + dividende, cripto, sau orice combinație de venituri — 497 LEI e o asigurare care te scutește de mii de lei în greșeli + amenzi.</p>
+          <p>Pentru cazuri simple (un singur tip de venit, sumă mică) — poți încerca singur. Pentru cazuri cu chirii + străinătate, PFA + dividende, cripto, sau orice combinație de venituri — serviciul nostru e o asigurare care te scutește de mii de lei în greșeli + amenzi.</p>
           <p><strong>Verificăm gratuit situația ta și îți spunem onest dacă merită sau nu.</strong></p>
         </>
       ),
@@ -235,7 +280,7 @@ export default function DeclaratieUnicaClient() {
     </svg>
   );
 
-  const waHref = "https://wa.me/40760937133?text=Bun%C4%83%21%20Vreau%20pachetul%20Declara%C8%9Bia%20Unic%C4%83%20%2B%20SPV%20cu%20497%20LEI.";
+  const waHref = "https://wa.me/40760937133?text=Bun%C4%83%21%20Vreau%20pachetul%20Declara%C8%9Bia%20Unic%C4%83%20%2B%20SPV%20cu%20497%20LEI.%20Numele%20meu%20este%3A%20";
 
   return (
     <>
@@ -246,17 +291,17 @@ export default function DeclaratieUnicaClient() {
           {/* HERO */}
           <section className="du-hero">
             <div className="du-container du-hero-inner">
-              <span className="du-hero-badge">📋 DECLARAȚIA UNICĂ 2026 ANAF</span>
+              <span className="du-hero-badge">VERIFICĂ GRATUIT CU ETF</span>
               <h1>
                 Declarația Unică 2026<br />
                 <span className="du-highlight">Completată de profesioniști în aceeași zi!</span>
               </h1>
               <p className="du-hero-sub">
                 Nu pierde 5 ore pe site-ul ANAF și nu risca amenzi.<br />
-                Îți completăm Declarația Unică + asistență SPV inclusă pentru <strong>497 LEI</strong> garantat fără greșeli.
+                Îți completăm Declarația Unică + asistență SPV inclusă, garantat fără greșeli.
               </p>
-              <p className="du-hero-micro">
-                Dacă suni până la ora <strong>12:00</strong> → declarația ta poate fi gata <strong>azi</strong>!
+              <p className="du-hero-micro" style={{ color: "#25D366", fontWeight: 800, textTransform: "uppercase", fontSize: "clamp(14px, 1.8vw, 18px)", letterSpacing: "0.3px" }}>
+                Verificare făcută de contabili specialiști<br />Nu de AI sau generatoare automate
               </p>
 
               <div className="du-cta-group">
@@ -272,12 +317,24 @@ export default function DeclaratieUnicaClient() {
               </div>
 
               <div className="du-lead-magnet-wrap">
-                <button className="du-lead-magnet-cta" onClick={() => openModal("lead", "hero_secondary")}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />
-                  </svg>
-                  <span>Nu ești sigur dacă trebuie să depui declarația? <strong>→ Obține o Verificare GRATUITĂ în 5 minute!</strong></span>
-                </button>
+                <p
+                  onClick={() => openModal("lead", "hero_secondary")}
+                  style={{
+                    color: "#ffd97a",
+                    fontSize: "clamp(22px, 3.5vw, 36px)",
+                    fontWeight: 800,
+                    textTransform: "uppercase",
+                    textAlign: "center",
+                    cursor: "pointer",
+                    lineHeight: 1.3,
+                    letterSpacing: "-0.5px",
+                    margin: 0,
+                  }}
+                >
+                  NU EȘTI SIGUR DACĂ TREBUIE SĂ DEPUI?<br />
+                  VERIFICARE GRATUITĂ ÎN 5 MIN -{" "}
+                  <span style={{ color: "#25D366" }}>DĂ CLICK AICI</span>
+                </p>
               </div>
 
               <div className="du-trust-row">
@@ -296,6 +353,124 @@ export default function DeclaratieUnicaClient() {
                   <div className="du-countdown-box"><div className="du-countdown-num">{countdown.mins}</div><div className="du-countdown-unit">Minute</div></div>
                   <div className="du-countdown-box"><div className="du-countdown-num">{countdown.secs}</div><div className="du-countdown-unit">Secunde</div></div>
                 </div>
+              </div>
+
+              {/* INLINE FORM */}
+              <div style={{ maxWidth: 480, margin: "0 auto" }}>
+                <div className="du-inline-form-card">
+                  {!inlineSuccess && (
+                    <form onSubmit={submitInlineForm}>
+                      <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 6, textAlign: "center" }}>Completează și te sunăm noi</h3>
+                      <p style={{ fontSize: 14, color: "rgba(255,255,255,0.85)", marginBottom: 18, lineHeight: 1.5, textAlign: "center" }}>Lasă-ne datele tale și te contactăm în maxim 30 de minute.<br /><strong style={{ textTransform: "uppercase", fontSize: 15, color: "#25D366" }}>FĂRĂ OBLIGAȚII</strong></p>
+                      <div>
+                        <input type="tel" name="inlinePhone" className="du-form-input" placeholder="Telefon *" autoComplete="tel" required style={{ marginBottom: 12 }} />
+                      </div>
+                      <div>
+                        <input type="text" name="inlineName" className="du-form-input" placeholder="Nume *" autoComplete="name" required style={{ marginBottom: 12 }} />
+                      </div>
+                      <div style={{ marginBottom: 14 }}>
+                        <select name="inlineSituation" className="du-form-select">
+                          <option value="">Tip venit (opțional)</option>
+                          <option value="chirii">Venituri din chirii</option>
+                          <option value="pfa">PFA / II / IF</option>
+                          <option value="dividende">Dividende</option>
+                          <option value="strainatate">Venituri din străinătate</option>
+                          <option value="cripto">Cripto / investiții</option>
+                          <option value="combinat">Mai multe surse de venit</option>
+                          <option value="altele">Altele / Nu sunt sigur</option>
+                        </select>
+                      </div>
+                      <label className="du-form-checkbox-row" style={{ color: "rgba(255,255,255,0.85)", fontSize: 12, marginBottom: 16 }}>
+                        <input type="checkbox" name="inlineGdpr" required />
+                        <span>Sunt de acord cu prelucrarea datelor conform <a href="https://www.etftax.net/confidentialitate" target="_blank" rel="noopener noreferrer" style={{ color: "var(--du-blue)" }}>Politicii de confidențialitate</a>.</span>
+                      </label>
+                      <button type="submit" className="du-form-submit" disabled={inlineSubmitting}>
+                        {inlineSubmitting ? "Se trimite..." : "TE SUNĂM ÎN MAXIM 30 DE MINUTE →"}
+                      </button>
+                    </form>
+                  )}
+
+                  {/* Mesaj vizibil permanent sub formular */}
+                  <div style={{ textAlign: "center", color: "#fff" }}>
+                    <div style={{ height: 24 }} />
+                    <h3>Mulțumim!</h3>
+                    <div style={{ height: 24 }} />
+                    <div style={{ width: 56, height: 56, background: "#2e8b57", color: "#fff", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, margin: "0 auto" }}>✓</div>
+                    <div style={{ height: 24 }} />
+                    <p>Te sunăm în maxim 30 de minute.</p>
+                    <p>Pentru urgențe, sună direct la <strong>+40 760 937 133</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* COMPARAȚIE */}
+          <section className="du-section">
+            <div className="du-container">
+              <h2 className="du-section-title">De ce să-ți completezi declarația cu ETF când poți face asta singur?</h2>
+              <p className="du-section-sub">Compară cele 3 opțiuni și decide în cunoștință de cauză.</p>
+              <div className="du-compare-table-wrap">
+                <table className="du-compare-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th className="du-compare-col-free">Singur pe ANAF.ro</th>
+                      <th className="du-compare-col-gen">Generator online gratuit</th>
+                      <th className="du-compare-col-etf">Cu ETF</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="du-row-label">Timp necesar</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> 5-10 ore</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-warn">⚠</span> 2-3 ore</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> 10 min</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Verificare specialist</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> Nu</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-x">✗</span> Nu</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Dublă</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Risc de greșeli</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> Ridicat</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-warn">⚠</span> Mediu</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Zero</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Risc amendă ANAF</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> 50-500 LEI</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-warn">⚠</span> Posibil</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Acoperit</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Asistență SPV</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> Nu</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-x">✗</span> Nu</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Inclus</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Suport întrebări</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> Ghișeu ANAF</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-x">✗</span> Chatbot</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Telefon direct</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Cazuri complexe</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> Foarte greu</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-x">✗</span> Nu acoperă</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Specialitate</td>
+                    </tr>
+                    <tr>
+                      <td className="du-row-label">Garanție</td>
+                      <td className="du-compare-col-free"><span className="du-compare-x">✗</span> Niciuna</td>
+                      <td className="du-compare-col-gen"><span className="du-compare-x">✗</span> Niciuna</td>
+                      <td className="du-compare-col-etf"><span className="du-compare-check">✓</span> Triplă 100%</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </section>
@@ -342,7 +517,7 @@ export default function DeclaratieUnicaClient() {
                 <div className="du-step">
                   <div className="du-step-num">3</div>
                   <h3>Primești declarația</h3>
-                  <p>În 24-48 de ore primești declarația completată + ghid SPV pentru depunere online.</p>
+                  <p>Primești declarația completată + ghid SPV pentru depunere online în cel mai scurt timp.</p>
                 </div>
               </div>
             </div>
@@ -436,37 +611,8 @@ export default function DeclaratieUnicaClient() {
           {/* OFERTA / PREȚ */}
           <section className="du-section">
             <div className="du-container">
-              <h2 className="du-section-title">Economisești 200 LEI cu pachetul complet</h2>
-              <p className="du-section-sub">De ce să plătești separat când poți avea totul într-un singur pachet?</p>
-
-              <div className="du-price-compare">
-                <div className="du-price-card du-price-card-separate">
-                  <div className="du-price-card-title">Plătit separat</div>
-                  <ul className="du-price-list">
-                    <li><span>Creare cont SPV</span><span className="du-price-val">200 LEI</span></li>
-                    <li><span>Completare Declarație Unică</span><span className="du-price-val">497 LEI</span></li>
-                  </ul>
-                  <div className="du-price-total">
-                    <span className="du-price-total-label">Total</span>
-                    <span className="du-price-total-value du-price-strike">697 LEI</span>
-                  </div>
-                </div>
-
-                <div className="du-price-card du-price-card-package">
-                  <div className="du-price-badge">Recomandat ✓</div>
-                  <div className="du-price-card-title">Pachet complet</div>
-                  <ul className="du-price-list">
-                    <li><span>Declarația Unică completată</span><span className="du-price-val">✓ Inclus</span></li>
-                    <li><span>Asistență SPV inclusă</span><span className="du-price-val">✓ Inclus</span></li>
-                    <li><span>Verificare situație fiscală</span><span className="du-price-val">✓ Inclus</span></li>
-                  </ul>
-                  <div className="du-price-total">
-                    <span className="du-price-total-label">Doar</span>
-                    <span className="du-price-total-value">497 LEI</span>
-                  </div>
-                  <div className="du-price-savings">💰 Economisești 200 LEI</div>
-                </div>
-              </div>
+              <h2 className="du-section-title">De ce să pierzi bani în tot acest proces?</h2>
+              <p className="du-section-sub">Elimină riscurile cu serviciile ETF.</p>
 
               <div className="du-scarcity-real">
                 <div className="du-scarcity-real-title">Cu cât te apropii de deadline 25 mai, cu atât echipa noastră e mai aglomerată</div>
@@ -604,13 +750,13 @@ export default function DeclaratieUnicaClient() {
                 className="du-modal-variant-tag"
                 style={{ background: isLead ? "#f1b500" : "#2e8b57" }}
               >
-                {isLead ? "Verificare GRATUITĂ" : "100% Gratuit • Răspuns în 30 minute"}
+                {isLead ? "Verificare GRATUITĂ" : "100% Gratuit • Răspuns în 4 ore"}
               </span>
-              <h3>{isLead ? "Verificare gratuită în 5 minute" : "Te sunăm noi în maxim 30 minute"}</h3>
+              <h3>{isLead ? "Verificare gratuită în 5 minute" : "Te sunăm noi în maxim 4 ore"}</h3>
               <p className="du-modal-sub">
                 {isLead
                   ? "Te sunăm și verificăm împreună dacă trebuie să depui Declarația Unică în 2026 și ce documente îți trebuie. Fără obligații, fără costuri."
-                  : "Lasă-ne numărul tău și te contactăm pentru detalii despre pachetul Declarația Unică + SPV de 497 LEI."}
+                  : "Lasă-ne numărul tău și te contactăm pentru detalii despre pachetul Declarația Unică + SPV."}
               </p>
 
               <div className="du-form-group">
@@ -654,7 +800,7 @@ export default function DeclaratieUnicaClient() {
             <div className="du-form-success">
               <div className="du-form-success-icon">✓</div>
               <h3>Mulțumim!</h3>
-              <p>Te sunăm în maxim 30 minute.</p>
+              <p>Te sunăm în maxim 4 ore.</p>
               <p>Pentru urgențe, sună direct la <strong>+40 760 937 133</strong></p>
             </div>
           )}
